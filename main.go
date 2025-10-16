@@ -58,6 +58,8 @@ func main() {
 
 		coll := client.Database("testdb").Collection("test")
 		opts := options.Find().SetLimit(20)
+
+		//Filtar data
 		result, err := coll.Find(context.TODO(), filter, opts)
 
 		if err != nil {
