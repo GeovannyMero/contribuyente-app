@@ -69,6 +69,7 @@ func main() {
 
 			result.Decode(&con)
 			contribuyentes = append(contribuyentes, con)
+
 		}
 
 		return c.JSON(&fiber.Map{
