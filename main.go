@@ -58,6 +58,8 @@ func main() {
 
 		coll := client.Database("testdb").Collection("test")
 		opts := options.Find().SetLimit(20)
+
+		//Filtar data
 		result, err := coll.Find(context.TODO(), filter, opts)
 
 		if err != nil {
@@ -69,6 +71,7 @@ func main() {
 
 			result.Decode(&con)
 			contribuyentes = append(contribuyentes, con)
+
 		}
 
 		return c.JSON(&fiber.Map{
