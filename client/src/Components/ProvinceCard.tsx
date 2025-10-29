@@ -1,10 +1,11 @@
 import React from 'react';
 import {useNavigate} from 'react-router'
+import { ProvinceProps } from '../Types/ProvinceProps.d';
 
-interface ProvinceProps {
-    name: string;
-    total: number
-}
+// interface ProvinceProps {
+//     name: string;
+//     total: number
+// }
 
 const ProvinceCard: React.FC<ProvinceProps> = ({ name, total }: ProvinceProps) => {
     let navigate = useNavigate();
@@ -18,7 +19,7 @@ const ProvinceCard: React.FC<ProvinceProps> = ({ name, total }: ProvinceProps) =
                     <div className='stat-actions'>
                         <button 
                             className="btn btn-xs btn-accent" 
-                            onClick={() => {navigate(`/contribuyentes/${name.toUpperCase()}`)}}
+                            onClick={() => {navigate(`/contribuyentes/${name.toLowerCase()}`)}}
                         >Visualizar
                         </button>
                     </div>
