@@ -11,6 +11,12 @@ type ContribuyenteHandler struct {
 	contribuyenteService *services.ContribuyenteService
 }
 
+func NewContribuyenteHandler(us *services.ContribuyenteService) *ContribuyenteHandler {
+	return &ContribuyenteHandler{
+		contribuyenteService: us,
+	}
+}
+
 func (h *ContribuyenteHandler) Get(c *fiber.Ctx) error {
 
 	contri, err := h.contribuyenteService.Get("dasd")
@@ -20,4 +26,5 @@ func (h *ContribuyenteHandler) Get(c *fiber.Ctx) error {
 	}
 
 	return c.Status(fiber.StatusOK).JSON(contri)
+	//return response.Ok(contri)
 }

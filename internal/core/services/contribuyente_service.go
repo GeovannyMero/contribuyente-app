@@ -11,6 +11,12 @@ type ContribuyenteService struct {
 	repo ports.ContribuyenteRepository
 }
 
+func NewContribuyenteService(r ports.ContribuyenteRepository) *ContribuyenteService {
+	return &ContribuyenteService{
+		repo: r,
+	}
+}
+
 func (s *ContribuyenteService) Get(province string) ([]domain.Contribuyente, error) {
 	return s.repo.Get(province)
 }
