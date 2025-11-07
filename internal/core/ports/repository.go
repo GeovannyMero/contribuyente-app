@@ -5,5 +5,5 @@ package ports
 import "github.com/geovannymero/contribuyente-app/internal/core/domain"
 
 type ContribuyenteRepository interface {
-	Get(province string) ([]domain.Contribuyente, error)
+	Get(province string, page, limit int) ([]domain.Contribuyente, int64, error)
 }
