@@ -25,11 +25,20 @@ func NewMongoRepository(client *mongo.Client, dbName, collName string) ports.Con
 	}
 }
 
-func (r *ContribuyenteRepository) Get(province string) ([]domain.Contribuyente, error) {
+func (r *ContribuyenteRepository) Get(province string, page, limit int) ([]domain.Contribuyente, int64, error) {
 	var contribuyentes []domain.Contribuyente
 
-	opts := options.Find().SetLimit(20)
-	res, err := r.collection.Find(context.TODO(), bson.D{}, opts)
+	// 1. Calcular Skip (Offset)
+	skip := int64((page - 1) * limit)
+
+	// 2. Definir Opciones de Búsqueda (Skip, Limit y Sort)
+	findOptions := options.Find()
+	findOptions.SetLimit(int64(limit))
+	findOptions.SetSkip(skip)
+	findOptions.SetSort(bson.D{{"_id", 1}}) // Ordenar es crucial para paginación consistente
+
+	//opts := options.Find().SetLimit(20)
+	res, err := r.collection.Find(context.TODO(), bson.D{}, findOptions)
 
 	for res.Next(context.TODO()) {
 		var con domain.Contribuyente
@@ -38,5 +47,5 @@ func (r *ContribuyenteRepository) Get(province string) ([]domain.Contribuyente, 
 		contribuyentes = append(contribuyentes, con)
 
 	}
-	return contribuyentes, err
+	return contribuyentes, int64(len(contribuyentes)), err
 }
