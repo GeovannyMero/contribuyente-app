@@ -8,4 +8,10 @@ import (
 func UserRoutes(app *fiber.App, h *handlers.ContribuyenteHandler) {
 	api := app.Group("/api/v1")
 	api.Get("/contribuyentes", h.Get)
+	api.Get("/contribuyentes/group", h.GetTotal)
+}
+
+// InitStaticRoutes configura el enrutamiento para archivos estáticos.
+func InitStaticRoutes(app *fiber.App) {
+	app.Static("/", "../../client/dist")
 }

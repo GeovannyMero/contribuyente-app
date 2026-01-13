@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/geovannymero/contribuyente-app/internal/core/services"
@@ -9,6 +10,7 @@ import (
 	"github.com/geovannymero/contribuyente-app/internal/infraestructure/mongodb"
 	"github.com/geovannymero/contribuyente-app/internal/routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -34,9 +36,14 @@ func main() {
 	// 3. CONFIGURACIÓN DE FIBER
 	app := fiber.New()
 
+	app.Use(cors.New())
+
 	// Rutas (Conecta el Handler con Fiber)
 	routes.UserRoutes(app, userHandler)
 
+	routes.InitStaticRoutes(app)
+
+	fmt.Println("Iniciando en el puerto 3000")
 	// 4. INICIO DEL SERVIDOR
 	log.Fatal(app.Listen(":3000"))
 }

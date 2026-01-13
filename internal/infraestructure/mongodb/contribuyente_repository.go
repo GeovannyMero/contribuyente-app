@@ -37,8 +37,15 @@ func (r *ContribuyenteRepository) Get(province string, page, limit int) ([]domai
 	findOptions.SetSkip(skip)
 	findOptions.SetSort(bson.D{{"_id", 1}}) // Ordenar es crucial para paginación consistente
 
+	//Filtros
+	filter := bson.D{}
+
+	if province != "" {
+		filter = append(filter, bson.E{Key: "codigo_juridiccion", Value: province})
+	}
+
 	//opts := options.Find().SetLimit(20)
-	res, err := r.collection.Find(context.TODO(), bson.D{}, findOptions)
+	res, err := r.collection.Find(context.TODO(), filter, findOptions)
 
 	for res.Next(context.TODO()) {
 		var con domain.Contribuyente
@@ -48,4 +55,32 @@ func (r *ContribuyenteRepository) Get(province string, page, limit int) ([]domai
 
 	}
 	return contribuyentes, int64(len(contribuyentes)), err
+}
+
+func (r *ContribuyenteRepository) GetTotal() ([]domain.ContrinuyenteTotal, error) {
+	var todalContribuyente []domain.ContrinuyenteTotal
+
+	//Pipeline
+	pipeline := mongo.Pipeline{
+		// Etapa de agrupacion
+		{{Key: "$group", Value: bson.D{
+			{Key: "_id", Value: "$codigo_juridiccion"}, //Agrupa por el campo de codigo de juridiccion
+			{Key: "total", Value: bson.D{
+				{Key: "$sum", Value: 1}, //Cuenta los documentos
+			}},
+		},
+		}},
+	}
+
+	res, err := r.collection.Aggregate(context.TODO(), pipeline)
+
+	for res.Next(context.TODO()) {
+		var con domain.ContrinuyenteTotal
+
+		res.Decode(&con)
+		todalContribuyente = append(todalContribuyente, con)
+
+	}
+
+	return todalContribuyente, err
 }
