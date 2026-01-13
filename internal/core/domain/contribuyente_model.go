@@ -24,3 +24,8 @@ type Contribuyente struct {
 	AgenteRetencion         string             `json:"agente_retencion" bson:"agente_retencion"`
 	Especial                string             `json:"especial" bson:"especial"`
 }
+
+type ContrinuyenteTotal struct {
+	Provincia string `json:"codigo_juridiccion" bson:"_id"`
+	Total     int    `json: count bson:"count"`
+}

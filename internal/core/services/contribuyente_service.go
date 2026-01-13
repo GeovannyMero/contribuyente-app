@@ -23,3 +23,7 @@ func (s *ContribuyenteService) Get(province string, page, limit int) (response.R
 	println(totalCount)
 	return response.Ok(data), err
 }
+func (s *ContribuyenteService) GetTotal() (response.Response[[]domain.ContrinuyenteTotal], error) {
+	data, err := s.repo.GetTotal()
+	return response.Ok(data), err
+}
