@@ -1,4 +1,4 @@
-import {  RouterProvider} from "react-router";
+import { RouterProvider } from "react-router";
 import "./App.css"
 import router from './Router'
 

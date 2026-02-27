@@ -1,5 +1,5 @@
 import React from 'react';
-import {useNavigate} from 'react-router'
+import { useNavigate } from 'react-router'
 import { ProvinceProps } from '../Types/ProvinceProps.d';
 
 // interface ProvinceProps {
@@ -7,24 +7,26 @@ import { ProvinceProps } from '../Types/ProvinceProps.d';
 //     total: number
 // }
 
-const ProvinceCard: React.FC<ProvinceProps> = ({ name, total }: ProvinceProps) => {
+const ProvinceCard: React.FC<ProvinceProps> = ({ codigo_juridiccion, Total }: ProvinceProps) => {
     let navigate = useNavigate();
     return (
         <>
-            {/* <div className="stats shadow"> */}
-                <div className="stat">
-                    <div className="stat-title">Provincia:</div>
-                    <div className="stat-value">{name}</div>
-                    <div className="stat-desc">{total} contribuyentes</div>
-                    <div className='stat-actions'>
-                        <button 
-                            className="btn btn-xs btn-accent" 
-                            onClick={() => {navigate(`/contribuyentes/${name.toLowerCase()}`)}}
-                        >Visualizar
+            <div className='card card-side bg-base-100 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden border-l-4 border-primary'>
+                <div className='card-body py-4 px-6'>
+                    <h2 className='text-lg font-bold text-base-content/70'>{codigo_juridiccion}</h2>
+                    <div className='flex items-baseline gap-2'>
+                        <p className='text-2xl font-black italic'>{Total}</p>
+                        <span className='text-xs opacity-50'>Registros</span>
+                    </div>
+                    <div className='card-actions justify-end'>
+                        <button className="btn btn-ghost btn-xs text-primary hover:bg-primary/10"
+                        onClick={() => {navigate(`/contribuyentes/${codigo_juridiccion.toLowerCase()}`)}}
+                        >
+                            Ver detalles →
                         </button>
                     </div>
                 </div>
-            {/* </div> */}
+            </div>
         </>
 
     )
