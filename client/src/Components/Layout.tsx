@@ -2,7 +2,7 @@ import { Outlet } from "react-router";
 
 const Layout = () => {
     return (
-        <div>
+        <div className="min-h-screen flex flex-col bg-base-100">
             <header>
                 <div className="navbar bg-base-100 shadow-sm">
                     <div className="flex-1">
@@ -25,13 +25,15 @@ const Layout = () => {
             </header>
 
             {/* 2. El Contenido de la Ruta Hija se renderizará aquí */}
-            <main style={{ padding: '20px' }}>
+            <main className="flex-grow p-10 max-w-7xl mx-auto w-full">
                 <Outlet />
             </main>
 
             {/* 3. Elementos Estáticos (Se repiten en todas las rutas) */}
-            <footer style={{ background: '#ccc', padding: '10px', textAlign: 'center' }}>
-                &copy; {new Date().getFullYear()} Contribuyentes
+            <footer className="footer footer-center p-4 bg-base-300 text-base-content">
+                <aside>
+                    <p>&copy; {new Date().getFullYear()} Contribuyentes</p>
+                </aside>
             </footer>
         </div>
 

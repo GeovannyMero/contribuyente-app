@@ -1,4 +1,4 @@
 export interface ProvinceProps {
-    name: string;
-    total: number
+    codigo_juridiccion: string;
+    Total: number
 }
