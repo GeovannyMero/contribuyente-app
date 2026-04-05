@@ -1,5 +1,7 @@
+import axios from "axios";
 import { contribuyente } from "../Types/Contribuyentes.d";
 import { ProvinceProps } from "../Types/ProvinceProps.d";
+import { ResponseData } from "../Types/Response.d";
 
 async function Get(provinceName: string, page: number): Promise<contribuyente[]> {
     try {
@@ -20,15 +22,19 @@ async function Get(provinceName: string, page: number): Promise<contribuyente[]>
 
 async function GetGrouping(): Promise<ProvinceProps[]> {
     try {
-        var httpResponse = await fetch(`http://127.0.0.1:3000/api/v1/contribuyentes/group`)
+        // var httpResponse = await fetch(`http://127.0.0.1:3000/api/v1/contribuyentes/group`)
+        const response = await axios.get<ResponseData>(`http://127.0.0.1:3000/api/v1/contribuyentes/group`)
+        const { Value, Message } = response.data;
 
-        if (!httpResponse.ok)
-            throw new Error(`Error HTTP: ${httpResponse.status}`);
+        // if (!httpResponse.ok)
+        //     throw new Error(`Error HTTP: ${httpResponse.status}`);
 
         // 3. Convertir la respuesta a JSON
-        const datos = await httpResponse.json();
+        console.error(Message)
 
-        return datos['Value'] as ProvinceProps[]
+        const datos = Value
+
+        return datos as ProvinceProps[]
     } catch (e) {
         console.error(e);
         return []

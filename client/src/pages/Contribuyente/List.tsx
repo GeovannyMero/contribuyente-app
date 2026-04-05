@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import { contribuyente } from "../../Types/Contribuyentes.d";
-import {Get} from '../../Services/ContribuyenteService.ts'
+import { Get } from '../../Services/ContribuyenteService.ts'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
 type ListaContri = contribuyente[]
 
 const List: React.FC = () => {
     console.log('Listado')
     const params = useParams()
+    let navigate = useNavigate()
     // console.log(params)
     // console.log("http://127.0.0.1:3000/api/v1/contribuyentes?page=1&limit=5")
     // const provinceName = params.province_name;
@@ -56,9 +59,21 @@ const List: React.FC = () => {
 
             <div className="card w-full h-full bg-base-100 shadow-sm">
                 <div className="card-body">
-                    <div className="card-title text-primary">
-                        {`Provincia de ${params.name?.toUpperCase()}`}
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="card-title text-primary">
+                            {`Provincia de ${params.name?.toUpperCase()}`}
+                        </div>
+                        <div className="flex gap-2">
+                            <button className="btn btn-sm btn-outline btn-primary"
+                            onClick={() => {navigate('/')}}
+                            >
+                                <FontAwesomeIcon icon={faCircleLeft} />
+                                Regresar
+                            </button>
+                        </div>
                     </div>
+
+
                     <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
                         <table className="table table-zebra">
                             <thead>
@@ -80,7 +95,9 @@ const List: React.FC = () => {
                                                     <th>{e.ruc}</th>
                                                     <td>{e.razon_social}</td>
                                                     <td>{e.tipo_contribuyente}</td>
-                                                    <td>{`${e.codigo_ciiu} - ${e.actividad_economica}`}</td>
+                                                    <td className="truncate max-w-md" title={e.actividad_economica}>
+                                                        {`${e.codigo_ciiu} - ${e.actividad_economica}`}
+                                                    </td>
                                                     <td>{e.estado_contribuyente}</td>
                                                     <td>
                                                         <button

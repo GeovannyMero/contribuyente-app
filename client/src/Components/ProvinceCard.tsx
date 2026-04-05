@@ -2,13 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router'
 import { ProvinceProps } from '../Types/ProvinceProps.d';
 
-// interface ProvinceProps {
-//     name: string;
-//     total: number
-// }
-
 const ProvinceCard: React.FC<ProvinceProps> = ({ codigo_juridiccion, Total }: ProvinceProps) => {
     let navigate = useNavigate();
+
     return (
         <>
             <div className='card card-side bg-base-100 shadow-md hover:shadow-2xl transition-shadow duration-300 overflow-hidden border-l-4 border-primary'>

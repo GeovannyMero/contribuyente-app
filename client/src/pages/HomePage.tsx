@@ -10,6 +10,7 @@ import { ProvinceProps } from "../Types/ProvinceProps.d";
 const HomePage: React.FC = () => {
 
     const [dataProvinces, setDataProvinces] = useState<ProvinceProps[]>([]);
+    var [loading, setLoading] = useState<boolean>(true);
 
     async function data(): Promise<ProvinceProps[]> {
         try {
@@ -26,10 +27,22 @@ const HomePage: React.FC = () => {
         data()
         .then(d => {
             setDataProvinces(d);
+            setLoading(false);
         })
         .catch(e => console.error(e))
 
     }, [])
+
+
+     // 1. Estado de Carga (Loading)
+    if (loading) {
+        return (
+            <div className="flex flex-col items-center justify-center p-20">
+                <span className="loading loading-spinner loading-lg text-primary"></span>
+                <p className="mt-4 text-sm animate-pulse">Cargando información...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="card p-4 md:p-8 bg-base-100">
